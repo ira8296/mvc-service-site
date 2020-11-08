@@ -20,6 +20,7 @@ const GameForm = (props) => {
               name="domoForm"
               action="/maker"
               method="POST"
+              encType="multipart/form-data"
               className="gameForm"
         >
             <label htmlFor="name">Title: </label>
@@ -28,6 +29,8 @@ const GameForm = (props) => {
             <input id="description" type="text" name="script" placeholder="Game Description"/>
             <label htmlFor="image">Screenshot Image: </label>
             <input id="gameTitle" type="text" name="name" placeholder="Enter Image URL for game screenshot"/>
+            <label htmlFor="game">Game File: </label>
+            <input id="gameFile" type="file" name="game"/>
             <input type="hidden" name="_csrf" value={props.csrf} />
             <input className="gameSubmit" type="submit" value="Post Game" />
         </form>
@@ -49,6 +52,7 @@ const GameList = function(props) {
                 <img src={game.image} alt="screenshot" className="gameFace" />
                 <h3 className="gameName">{game.title}</h3>
                 <p className="gamePlot">{game.description}</p>
+                <button className="download" action="/download" method="get">Download</button>
             </div>
         );
     });

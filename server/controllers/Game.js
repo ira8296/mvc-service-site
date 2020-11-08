@@ -1,4 +1,5 @@
 const models = require('../models');
+const file = require('../models/File.js');
 
 const { Game } = models;
 
@@ -14,14 +15,30 @@ const posterPage = (req, res) => {
 };
 
 const postGame = (req, res) => {
-    if (!req.body.title || !req.body.description || !req.body.image) {
+    if (!req.body.title || !req.body.description || !req.body.image || !req.body.files) {
         return res.status(400).json({ error: 'Title, description, and image are all required' });
     }
+    
+    const { game } = req.files;
+    
+    const gameModel = new file.FileModel(game);
+    
+    const savePromise = gameModel.save();
+    
+    savePromise.then(() => {
+        res.status(201).json({ message: 'Upload Successful'});
+    });
+    
+    savePromise.catch((error) => {
+        console.dir(error);
+        res.status(400).json({ error: 'The file could not upload'});
+    });
     
     const gameData = {
         title: req.body.title,
         description: req.body.description,
         image: req.body.image,
+        file: savePromise,
         owner: req.session.account._id,
     };
     
@@ -57,6 +74,11 @@ const getGames = (request, response) => {
     });
 };
 
+const downloadFile = (req, res) => {
+    file.FileModel.findOne({ })
+};
+
 module.exports.posterPage = posterPage;
 module.exports.getGames = getGames;
 module.exports.post = postGame;
+module.exports.download = downloadFile;

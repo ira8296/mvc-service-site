@@ -30,6 +30,11 @@ const GameSchema = new mongoose.Schema({
         trim: true,
     },
     
+    file: {
+        type: Object,
+        required: true,
+    },
+    
     owner: {
         type: mongoose.Schema.ObjectId,
         required: true,
@@ -46,6 +51,7 @@ GameSchema.statics.toAPI = (doc) => ({
     title: doc.title,
     description: doc.description,
     image: doc.image,
+    file: doc.file,
 });
 
 GameSchema.statics.findByOwner = (ownerId, callback) => {

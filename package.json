@@ -1,0 +1,35 @@
+{
+  "name": "mvc-service-site",
+  "version": "1.0.0",
+  "description": "\u0016\u0016A web app on which game developers can post their games for visitors to play and critique",
+  "main": "./server/app.js",
+  "scripts": {
+    "start": "node ./server/app.js",
+    "pretest": "eslint ./server --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ira8296/mvc-service-site.git"
+  },
+  "keywords": [
+    "Node",
+    "MVC",
+    "Redis",
+    "Login"
+  ],
+  "author": "Ike Ajah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ira8296/mvc-service-site/issues"
+  },
+  "homepage": "https://github.com/ira8296/mvc-service-site#readme",
+  "devDependencies": {
+    "@babel/preset-react": "^7.12.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "underscore": "^1.11.0"
+  }
+}

@@ -11,7 +11,11 @@ const signupPage = (req, res) => {
 };
 
 const gamePage = (req, res) => {
-    res.render('arcade' {csrfToken: req.csrfToken() });
+    res.render('arcade', {csrfToken: req.csrfToken() });
+};
+
+const homePage = (req, res) => {
+    res.render('home', { csrfToken: req.csrfToken() });
 };
 
 const logout = (req, res) => {
@@ -104,3 +108,4 @@ module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.games = gamePage;
+module.exports.homePage = homePage;

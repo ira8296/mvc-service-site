@@ -12,6 +12,7 @@ const RedisStore = require('connect-redis')(session);
 const url = require('url');
 const csrf = require('csurf');
 const redis = require('redis');
+const fileUpload = require('express-fileupload');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -55,6 +56,7 @@ app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
 app.disable('x-powered-by');
 
 app.use(compression());
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
