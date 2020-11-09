@@ -52,7 +52,10 @@ const GameList = function(props) {
                 <img src={game.image} alt="screenshot" className="gameFace" />
                 <h3 className="gameName">{game.title}</h3>
                 <p className="gamePlot">{game.description}</p>
-                <button className="download" action="/download" method="get">Download</button>
+                <form ref='downloadForm' id='downloadForm' action='/download' method='get'>
+                    <input type="hidden" name='fileId' value={game.file} />
+                    <input type='submit' value='Download'/>
+                </form>
             </div>
         );
     });

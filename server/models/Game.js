@@ -31,7 +31,7 @@ const GameSchema = new mongoose.Schema({
     },
     
     file: {
-        type: Object,
+        type: ObjectId,
         required: true,
     },
     

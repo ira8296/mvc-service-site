@@ -38,7 +38,7 @@ const postGame = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         image: req.body.image,
-        file: savePromise,
+        file: gameModel._id,
         owner: req.session.account._id,
     };
     
@@ -75,7 +75,22 @@ const getGames = (request, response) => {
 };
 
 const downloadFile = (req, res) => {
-    file.FileModel.findOne({ })
+    if(!req.query.fileId){
+        return res.status(400).json({ error: 'File cannot be found '});
+    }
+    file.FileModel.findOne({ _id: req.query.fileId }, (error, doc) => {
+        if(error) {
+            console.dir(error);
+            return res.status(400).json({ error: 'An error occurred downloading the file'});
+        }
+        
+        if(!doc){
+            return res.status(400).json({ error: 'File not found' });
+        }
+        
+        res.writeHead(200, {'Content-Type': doc.mimetype, 'Content-Length': doc.size});
+        return res.end(doc.data);
+    });
 };
 
 module.exports.posterPage = posterPage;
