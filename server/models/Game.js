@@ -59,7 +59,7 @@ GameSchema.statics.findByOwner = (ownerId, callback) => {
         owner: convertId(ownerId),
     };
     
-    return GameModel.find(search).select('title description image').lean().exec(callback);
+    return GameModel.find(search).select('title description image file').lean().exec(callback);
 };
 
 GameModel = mongoose.model('Game', GameSchema);

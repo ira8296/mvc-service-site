@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-image: url("img/galaxy.jpg");
 }
 
 #logo {
@@ -188,6 +189,22 @@ nav:nth-child(1) {
     border-color: rgba(255,255,255, 0.8);
     transition: background-color 2.6s ease-out;
     background-color: #66bfff;
+}
+
+.path{
+    width: 33%;
+    height: 40%;
+    color: white;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid white;
+}
+
+.path img{
+    width: 40%;
+    height: 40%;
+    align-self: center;
+    padding: 1%;
 }
 
 h3.emptyGame {
