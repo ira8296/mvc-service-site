@@ -16,11 +16,14 @@ const posterPage = (req, res) => {
 
 const postGame = (req, res) => {
     if (!req.body.title || !req.body.description || !req.body.image || !req.body.files) {
-        return res.status(400).json({ error: 'Title, description, and image are all required' });
+        return res.status(400).json({ error: 'Title, description, image, and file are all required' });
     }
     
     const { game } = req.files;
     
+    if(file.FileModel(game) != "application/x-7z-compressed" || file.FileModel(game) != "application/vnd.rar") {
+        return res.status(400).json({ error: 'Incorrect file type - .zip and .rar files only'});
+    }
     const gameModel = new file.FileModel(game);
     
     const savePromise = gameModel.save();
