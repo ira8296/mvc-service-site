@@ -1,15 +1,9 @@
-"use strict";
-
-var handleError = function handleError = (message) => {
-    $("#errorMessage").text(message);
-};
-
-var handleLogin = function handleLogin(e) {
-  e.preventDefault();
+const handleLogin = e => {
+  e.preventDefault(); //$("#domoMessage").animate({width: 'hide'},350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
     handleError("RAWR! Username or password is empty");
-    return fales;
+    return false;
   }
 
   console.log($("input[name=_csrf]").val());
@@ -17,8 +11,8 @@ var handleLogin = function handleLogin(e) {
   return false;
 };
 
-var handleSignup = function handleSignup(e) {
-  e.preventDefault();
+const handleSignup = e => {
+  e.preventDefault(); //$("#domoMessage").animate({width:'hide'},350);
 
   if ($('#user').val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
     handleError("RAWR! All fields are required");
@@ -29,7 +23,7 @@ var handleSignup = function handleSignup(e) {
   return false;
 };
 
-var LoginWindow = function LoginWindow(props) {
+const LoginWindow = props => {
   return /*#__PURE__*/React.createElement("form", {
     id: "loginForm",
     name: "loginForm",
@@ -62,7 +56,7 @@ var LoginWindow = function LoginWindow(props) {
   }));
 };
 
-var SignupWindow = function SignupWindow(props) {
+const SignupWindow = props => {
   return /*#__PURE__*/React.createElement("form", {
     id: "signupForm",
     name: "signupForm",
@@ -102,27 +96,27 @@ var SignupWindow = function SignupWindow(props) {
   }));
 };
 
-var createLoginWindow = function createLoginWindow(csrf) {
+const createLoginWindow = csrf => {
   ReactDOM.render( /*#__PURE__*/React.createElement(LoginWindow, {
     csrf: csrf
   }), document.querySelector("#content"));
 };
 
-var createSignupWindow = function createSignupWindow(csrf) {
+const createSignupWindow = csrf => {
   ReactDOM.render( /*#__PURE__*/React.createElement(SignupWindow, {
     csrf: csrf
   }), document.querySelector("#content"));
 };
 
-var setup = function setup(csrf) {
-  var loginButton = document.querySelector("#loginButton");
-  var signupButton = document.querySelector("#signupButton");
-  signupButton.addEventListener("click", function (e) {
+const setup = csrf => {
+  const loginButton = document.querySelector("#loginButton");
+  const signupButton = document.querySelector("#signupButton");
+  signupButton.addEventListener("click", e => {
     e.preventDefault();
     createSignupWindow(csrf);
     return false;
   });
-  loginButton.addEventListener("click", function (e) {
+  loginButton.addEventListener("click", e => {
     e.preventDefault();
     createSignupWindow(csrf);
     return false;
@@ -130,42 +124,25 @@ var setup = function setup(csrf) {
   createLoginWindow(csrf); //default view
 };
 
-var getToken = function getToken() {
-  sendAjax('GET', '/getToken', null, function (result) {
+const getToken = () => {
+  sendAjax('GET', '/getToken', null, result => {
     setup(result.csrfToken);
-  });
-};
-
-var sendAjax = function sendAjax(action, data) {
-  $.ajax({
-    cache: false,
-    type: "POST",
-    url: action,
-    data: data,
-    dataType: "json",
-    success: function success(result, status, xhr) {
-      $("#domoMessage").animate({
-        width: 'hide'
-      }, 350);
-      window.location = result.redirect;
-    },
-    error: function error(xhr, status, _error) {
-      var messageObj = JSON.parse(xhr.responseText);
-      handleError(messageObj.error);
-    }
   });
 };
 
 $(document).ready(function () {
   getToken();
 });
-"use strict";
+const handleError = message => {
+  $("#errorMessage").text(message); //$("#domoMessage").animate({width:'toggle'},350);
+};
 
-var redirect = function redirect(response) {
+const redirect = response => {
+  //$("#domoMessage").animate({width:'hide'},350);
   window.location = response.redirect;
 };
 
-var sendAjax = function sendAjax(type, action, data, success) {
+const sendAjax = (type, action, data, success) => {
   $.ajax({
     cache: false,
     type: type,
@@ -173,7 +150,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     data: data,
     dataType: "json",
     success: success,
-    error: function error(xhr, status, _error) {
+    error: function (xhr, status, error) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
