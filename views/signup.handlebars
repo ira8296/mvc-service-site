@@ -2,16 +2,16 @@
 <head>
   <meta charset="utf-8"/>
   <title>Galaxy Arcade</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body> 
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a id="homeButton" href="/home">Home</a></div>
     <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
     <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
-    <div class="navlink"><a id="arcadeButton" href="/arcade">Arcade</a></div>
   </nav>
   <section id="signup">
     <form id="signupForm" name="signupForm" action="/signup" method="POST" class="mainForm">
