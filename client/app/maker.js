@@ -23,16 +23,26 @@ const GameForm = (props) => {
               encType="multipart/form-data"
               className="gameForm"
         >
-            <label htmlFor="name">Title: </label>
-            <input id="gameTitle" type="text" name="name" placeholder="Game Title"/>
-            <label htmlFor="script">Description: </label>
-            <input id="description" type="text" name="script" placeholder="Game Description"/>
-            <label htmlFor="image">Screenshot Image: </label>
-            <input id="gameTitle" type="text" name="name" placeholder="Enter Image URL for game screenshot"/>
-            <label htmlFor="game">Game File: </label>
-            <input id="gameFile" type="file" name="game"/>
+            <div className="field">
+                <label htmlFor="name">Title: </label>
+                <input id="gameTitle" type="text" name="name" placeholder="Game Title"/>
+            </div>
+            <div className="field">
+                <label htmlFor="script">Description: </label>
+                <input id="description" type="text" name="script" placeholder="Game Description"/>
+            </div>
+            <div className="field">
+                <label htmlFor="image">Screenshot Image: </label>
+                <input id="gameTitle" type="text" name="name" placeholder="Enter Image URL for game screenshot"/>
+            </div>
+            <div className="field">
+                <label htmlFor="game">Game File: </label>
+                <input id="gameFile" type="file" name="game"/>
+            </div>
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="gameSubmit" type="submit" value="Post Game" />
+            <div className="field">
+                <input className="gameSubmit" type="submit" value="Post Game" />
+            </div>
         </form>
     );
 };
@@ -69,6 +79,7 @@ const GameList = function(props) {
 
 const loadGamesFromServer = () => {
     sendAjax('GET', '/getGames', null, (data) => {
+        console.dir(data);
         ReactDOM.render(
             <GameList games={data.games} />, document.querySelector("#games")
         );
@@ -81,7 +92,7 @@ const setup = function(csrf) {
     );
     
     ReactDOM.render(
-        <GameList domos={[]} />, document.querySelector("#games")
+        <GameList games={[]} />, document.querySelector("#games")
     );
     
     loadGamesFromServer();

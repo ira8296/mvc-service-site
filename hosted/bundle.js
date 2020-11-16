@@ -1,4 +1,6 @@
-const handleGame = e => {
+"use strict";
+
+var handleGame = function handleGame(e) {
   e.preventDefault();
 
   if ($("#gameTitle").val() == '' || $("#description").val() == '' || $("#screenShot").val() == '') {
@@ -13,7 +15,7 @@ const handleGame = e => {
   return false;
 };
 
-const GameForm = props => {
+var GameForm = function GameForm(props) {
   return /*#__PURE__*/React.createElement("form", {
     id: "gameForm",
     onSubmit: handleGame,
@@ -22,6 +24,8 @@ const GameForm = props => {
     method: "POST",
     encType: "multipart/form-data",
     className: "gameForm"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "field"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "name"
   }, "Title: "), /*#__PURE__*/React.createElement("input", {
@@ -29,38 +33,46 @@ const GameForm = props => {
     type: "text",
     name: "name",
     placeholder: "Game Title"
-  }), /*#__PURE__*/React.createElement("label", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "script"
   }, "Description: "), /*#__PURE__*/React.createElement("input", {
     id: "description",
     type: "text",
     name: "script",
     placeholder: "Game Description"
-  }), /*#__PURE__*/React.createElement("label", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "image"
   }, "Screenshot Image: "), /*#__PURE__*/React.createElement("input", {
     id: "gameTitle",
     type: "text",
     name: "name",
     placeholder: "Enter Image URL for game screenshot"
-  }), /*#__PURE__*/React.createElement("label", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "game"
   }, "Game File: "), /*#__PURE__*/React.createElement("input", {
     id: "gameFile",
     type: "file",
     name: "game"
-  }), /*#__PURE__*/React.createElement("input", {
+  })), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
     value: props.csrf
-  }), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("input", {
     className: "gameSubmit",
     type: "submit",
     value: "Post Game"
-  }));
+  })));
 };
 
-const GameList = function (props) {
+var GameList = function GameList(props) {
   if (props.games.length === 0) {
     return /*#__PURE__*/React.createElement("div", {
       className: "gameList"
@@ -69,7 +81,7 @@ const GameList = function (props) {
     }, "No Games yet"));
   }
 
-  const gameNodes = props.games.map(function (game) {
+  var gameNodes = props.games.map(function (game) {
     return /*#__PURE__*/React.createElement("div", {
       key: game._id,
       className: "game"
@@ -100,26 +112,27 @@ const GameList = function (props) {
   }, gameNodes);
 };
 
-const loadGamesFromServer = () => {
-  sendAjax('GET', '/getGames', null, data => {
+var loadGamesFromServer = function loadGamesFromServer() {
+  sendAjax('GET', '/getGames', null, function (data) {
+    console.dir(data);
     ReactDOM.render( /*#__PURE__*/React.createElement(GameList, {
       games: data.games
     }), document.querySelector("#games"));
   });
 };
 
-const setup = function (csrf) {
+var setup = function setup(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(GameForm, {
     csrf: csrf
   }), document.querySelector("#makeGames"));
   ReactDOM.render( /*#__PURE__*/React.createElement(GameList, {
-    domos: []
+    games: []
   }), document.querySelector("#games"));
   loadGamesFromServer();
 };
 
-const getToken = () => {
-  sendAjax('GET', '/getToken', null, result => {
+var getToken = function getToken() {
+  sendAjax('GET', '/getToken', null, function (result) {
     setup(result.csrfToken);
   });
 };
@@ -127,16 +140,18 @@ const getToken = () => {
 $(document).ready(function () {
   getToken();
 });
-const handleError = message => {
+"use strict";
+
+var handleError = function handleError(message) {
   $("#errorMessage").text(message); //$("#domoMessage").animate({width:'toggle'},350);
 };
 
-const redirect = response => {
+var redirect = function redirect(response) {
   //$("#domoMessage").animate({width:'hide'},350);
   window.location = response.redirect;
 };
 
-const sendAjax = (type, action, data, success) => {
+var sendAjax = function sendAjax(type, action, data, success) {
   $.ajax({
     cache: false,
     type: type,
@@ -144,7 +159,7 @@ const sendAjax = (type, action, data, success) => {
     data: data,
     dataType: "json",
     success: success,
-    error: function (xhr, status, error) {
+    error: function error(xhr, status, _error) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
