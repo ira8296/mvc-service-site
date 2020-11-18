@@ -33,7 +33,7 @@ const GameForm = (props) => {
             </div>
             <div className="field">
                 <label htmlFor="image">Screenshot Image: </label>
-                <input id="gameTitle" type="text" name="name" placeholder="Enter Image URL for game screenshot"/>
+                <input id="gameTitle" type="file" name="image"/>
             </div>
             <div className="field">
                 <label htmlFor="game">Game File: </label>

@@ -48,9 +48,8 @@ var GameForm = function GameForm(props) {
     htmlFor: "image"
   }, "Screenshot Image: "), /*#__PURE__*/React.createElement("input", {
     id: "gameTitle",
-    type: "text",
-    name: "name",
-    placeholder: "Enter Image URL for game screenshot"
+    type: "file",
+    name: "image"
   })), /*#__PURE__*/React.createElement("div", {
     className: "field"
   }, /*#__PURE__*/React.createElement("label", {

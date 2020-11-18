@@ -25,7 +25,7 @@ const GameSchema = new mongoose.Schema({
     },
     
     image: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
         required: true,
         trim: true,
     },
