@@ -160,3 +160,19 @@ var sendAjax = function sendAjax(type, action, data, success) {
     }
   });
 };
+
+var fileUpload = function fileUpload(action, data, success) {
+  $.ajax({
+    cache: false,
+    type: "POST",
+    url: action,
+    data: data,
+    processData: false,
+    contentType: false,
+    success: success,
+    error: function error(xhr, status, _error2) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+    }
+  });
+};

@@ -22,3 +22,19 @@ const sendAjax = (type, action, data, success) => {
         }
     });
 };
+
+const fileUpload = (action, data, success) => {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: action,
+        data: data,
+        processData: false,
+        contentType: false,
+        success: success,
+        error: (xhr, status, error) => {
+            const messageObj = JSON.parse(xhr.responseText);
+            handleError(messageObj.error);
+        }
+    });
+};
