@@ -8,10 +8,20 @@ var handleGame = function handleGame(e) {
     return false;
   }
 
-  console.log($("#gameForm").serialize());
-  sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function () {
+  var gameForm = document.getElementById('gameForm');
+  var formData = new FormData(gameForm);
+  console.dir(gameForm);
+  formData.append('image', document.getElementById('gameScreenshot').files[0]);
+  formData.append('game', document.getElementById('gameFile').files[0]);
+  console.dir(formData);
+  fileUpload($("#gameForm").attr("action"), formData, function () {
     loadGamesFromServer();
   });
+  /*console.log($("#gameForm").serialize());
+  sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
+      loadGamesFromServer();
+  });*/
+
   return false;
 };
 
@@ -47,10 +57,9 @@ var GameForm = function GameForm(props) {
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "image"
   }, "Screenshot Image: "), /*#__PURE__*/React.createElement("input", {
-    id: "gameTitle",
-    type: "text",
-    name: "name",
-    placeholder: "Enter Image URL for game screenshot"
+    id: "gameScreenshot",
+    type: "file",
+    name: "image"
   })), /*#__PURE__*/React.createElement("div", {
     className: "field"
   }, /*#__PURE__*/React.createElement("label", {
@@ -160,6 +169,22 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+    }
+  });
+};
+
+var fileUpload = function fileUpload(action, data, success) {
+  $.ajax({
+    cache: false,
+    type: "POST",
+    url: action,
+    data: data,
+    processData: false,
+    contentType: false,
+    success: success,
+    error: function error(xhr, status, _error2) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
