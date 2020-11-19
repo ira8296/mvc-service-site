@@ -1,3 +1,4 @@
+
 const models = require('../models');
 const file = require('../models/File.js');
 
@@ -22,7 +23,6 @@ const postGame = (req, res) => {
   const { game } = req.files.game;
 
   const { image } = req.files.image;
-    
 
   console.dir(req.files.game.mimetype);
   console.dir(req.files.image.mimetype);
