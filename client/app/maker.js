@@ -5,10 +5,21 @@ const handleGame = (e) => {
         handleError("All fields are required");
         return false;
     }
-    console.log($("#gameForm").serialize());
-    sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
+    
+    let gameForm = document.getElementById('gameForm');
+    let formData = new FormData(gameForm);
+    console.dir(gameForm);
+    
+    console.dir(formData);
+    
+    fileUpload($("#gameForm").attr("action"), formData, function() {
         loadGamesFromServer();
     });
+    
+    /*console.log($("#gameForm").serialize());
+    sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
+        loadGamesFromServer();
+    });*/
     
     return false;
 };
@@ -33,7 +44,7 @@ const GameForm = (props) => {
             </div>
             <div className="field">
                 <label htmlFor="image">Screenshot Image: </label>
-                <input id="gameTitle" type="text" name="name" placeholder="Enter Image URL for game screenshot"/>
+                <input id="gameScreenshot" type="file" name="image"/>
             </div>
             <div className="field">
                 <label htmlFor="game">Game File: </label>
@@ -62,7 +73,7 @@ const GameList = function(props) {
                 <img src={game.image} alt="screenshot" className="gameFace" />
                 <h3 className="gameName">{game.title}</h3>
                 <p className="gamePlot">{game.description}</p>
-                <form ref='downloadForm' id='downloadForm' action='/download' method='get'>
+                <form id='downloadForm' action='/download' method='get'>
                     <input type="hidden" name='fileId' value={game.file} />
                     <input type='submit' value='Download'/>
                 </form>
