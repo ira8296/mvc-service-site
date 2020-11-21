@@ -52,15 +52,20 @@ nav:nth-child(1) {
 
 .gameForm {
     border: 2px solid #338acc;
-    height: 25%;
+    height: 33%;
     width: 20%;
-    margin-top:0px;
+    margin: 1%;
     padding-top:10px;
     margin-bottom: 10px;
-    background-color: #55acee;
+    background-color: blue;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
     position: relative;
+}
+
+#description{
+    width: 60%;
+    height: 20%;
 }
 
 .field{
@@ -79,6 +84,7 @@ nav:nth-child(1) {
     border-radius: 2px;
     color: white;
     text-decoration: none;
+    margin: 1%;
 }
 
 .gameSubmit:link, .gameSubmit:visited, .gameSubmit:hover, .gameSubmit:active {
@@ -168,7 +174,9 @@ nav:nth-child(1) {
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 100px;
-    background-color: ghostwhite;
+    color: ghostwhite;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .game {

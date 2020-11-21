@@ -11,11 +11,11 @@ const signupPage = (req, res) => {
 };
 
 const gamePage = (req, res) => {
-    res.render('arcade', {csrfToken: req.csrfToken() });
+  res.render('arcade', { csrfToken: req.csrfToken() });
 };
 
 const homePage = (req, res) => {
-    res.render('home', { csrfToken: req.csrfToken() });
+  res.render('home', { csrfToken: req.csrfToken() });
 };
 
 const logout = (req, res) => {
