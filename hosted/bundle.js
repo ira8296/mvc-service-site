@@ -20,6 +20,7 @@ var handleGame = function handleGame(e) {
       loadGamesFromServer();
   });*/
 
+<<<<<<< HEAD
   return false;
 };
 
@@ -166,6 +167,8 @@ var handleGame = function handleGame(e) {
       loadGamesFromServer();
   });*/
 
+=======
+>>>>>>> f7ddb6a71e822583e07b34e306605098b6f8e4c6
   return false;
 };
 
