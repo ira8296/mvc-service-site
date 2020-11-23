@@ -8,10 +8,12 @@
     "pretest": "eslint ./server --fix",
     "test": "echo \"Tests complete\"",
     "buildLoginBundle": "babel ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
-    "buildAppBundle": "babel ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
-    "build": "npm run buildLoginBundle && npm run buildAppBundle",
+    "buildAppBundle": "babel ./client/app/maker.js ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
+    "buildArcadeBundle": "babel ./client/app/arcade.js ./client/helper --presets @babel/preset-react --out-file ./hosted/arcadeBundle.js",
+    "build": "npm run buildLoginBundle && npm run buildAppBundle && npm run buildArcadeBundle",
     "watchLoginBundle": "babel --watch ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
-    "watchAppBundle": "babel --watch ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
+    "watchAppBundle": "babel --watch ./client/app/maker.js ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
+    "watchArcadeBundle": "babel --watch ./client/app/arcade.js ./client/helper --presets @babel/preset-react --out-file ./hosted/arcadeBundle.js",
     "nodemon": "nodemon --watch ./server ./server/app.js"
   },
   "repository": {

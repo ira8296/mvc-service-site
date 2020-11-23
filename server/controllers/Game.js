@@ -1,3 +1,4 @@
+
 const models = require('../models');
 const file = require('../models/File.js');
 
@@ -84,6 +85,20 @@ const getGames = (request, response) => {
   const req = request;
   const res = response;
 
+  return Game.GameModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+
+    return res.json({ games: docs });
+  });
+};
+
+const getAllGames = (request, response) => {
+  const req = request;
+  const res = response;
+
   return Game.GameModel.find({}, (err, docs) => {
     if (err) {
       console.log(err);
@@ -107,7 +122,7 @@ const downloadFile = (req, res) => {
     if (!doc) {
       return res.status(400).json({ error: 'File not found' });
     }
-
+    
     res.writeHead(200, { 'Content-Type': doc.mimetype, 'Content-Length': doc.size });
     return res.end(doc.data);
   });
@@ -115,5 +130,6 @@ const downloadFile = (req, res) => {
 
 module.exports.posterPage = posterPage;
 module.exports.getGames = getGames;
+module.exports.getAll = getAllGames;
 module.exports.post = postGame;
 module.exports.download = downloadFile;
