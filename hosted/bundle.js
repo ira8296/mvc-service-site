@@ -8,8 +8,11 @@ var handleGame = function handleGame(e) {
     return false;
   }
 
-  console.log($("#gameForm").serialize());
-  sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function () {
+  var gameForm = document.getElementById('gameForm');
+  var formData = new FormData(gameForm);
+  console.dir(gameForm);
+  console.dir(formData);
+  fileUpload($("#gameForm").attr("action"), formData, function () {
     loadGamesFromServer();
   });
   return false;
@@ -47,10 +50,9 @@ var GameForm = function GameForm(props) {
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "image"
   }, "Screenshot Image: "), /*#__PURE__*/React.createElement("input", {
-    id: "gameTitle",
-    type: "text",
-    name: "name",
-    placeholder: "Enter Image URL for game screenshot"
+    id: "gameScreenshot",
+    type: "file",
+    name: "image"
   })), /*#__PURE__*/React.createElement("div", {
     className: "field"
   }, /*#__PURE__*/React.createElement("label", {
@@ -82,11 +84,12 @@ var GameList = function GameList(props) {
   }
 
   var gameNodes = props.games.map(function (game) {
+    var imgString = "/download?fileId=".concat(game.image);
     return /*#__PURE__*/React.createElement("div", {
       key: game._id,
       className: "game"
     }, /*#__PURE__*/React.createElement("img", {
-      src: game.image,
+      src: imgString,
       alt: "screenshot",
       className: "gameFace"
     }), /*#__PURE__*/React.createElement("h3", {
@@ -94,7 +97,6 @@ var GameList = function GameList(props) {
     }, game.title), /*#__PURE__*/React.createElement("p", {
       className: "gamePlot"
     }, game.description), /*#__PURE__*/React.createElement("form", {
-      ref: "downloadForm",
       id: "downloadForm",
       action: "/download",
       method: "get"
@@ -160,6 +162,22 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+    }
+  });
+};
+
+var fileUpload = function fileUpload(action, data, success) {
+  $.ajax({
+    cache: false,
+    type: "POST",
+    url: action,
+    data: data,
+    processData: false,
+    contentType: false,
+    success: success,
+    error: function error(xhr, status, _error2) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }

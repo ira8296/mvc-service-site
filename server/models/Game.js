@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const nedb = require('nedb');
 
 mongoose.Promise = global.Promise;
 const _ = require('underscore');
@@ -11,55 +12,55 @@ const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
 const GameSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        set: setName,
-    },
-    
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    
-    image: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    
-    file: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-    },
-    
-    owner: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'Account',
-    },
-    
-    postedData: {
-        type: Date,
-        default: Date.now,
-    },
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    set: setName,
+  },
+
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  image: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    trim: true,
+  },
+
+  file: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+  },
+
+  owner: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: 'Account',
+  },
+
+  postedData: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 GameSchema.statics.toAPI = (doc) => ({
-    title: doc.title,
-    description: doc.description,
-    image: doc.image,
-    file: doc.file,
+  title: doc.title,
+  description: doc.description,
+  image: doc.image,
+  file: doc.file,
 });
 
 GameSchema.statics.findByOwner = (ownerId, callback) => {
-    const search = {
-        owner: convertId(ownerId),
-    };
-    
-    return GameModel.find(search).select('title description image file').lean().exec(callback);
+  const search = {
+    owner: convertId(ownerId),
+  };
+
+  return GameModel.find(search).select('title description image file').lean().exec(callback);
 };
 
 GameModel = mongoose.model('Game', GameSchema);

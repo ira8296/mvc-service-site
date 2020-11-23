@@ -4,7 +4,7 @@ var handleLogin = function handleLogin(e) {
   e.preventDefault(); //$("#domoMessage").animate({width: 'hide'},350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
-    handleError("RAWR! Username or password is empty");
+    handleError("Username or password is empty");
     return false;
   }
 
@@ -17,7 +17,7 @@ var handleSignup = function handleSignup(e) {
   e.preventDefault(); //$("#domoMessage").animate({width:'hide'},350);
 
   if ($('#user').val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-    handleError("RAWR! All fields are required");
+    handleError("All fields are required");
     return false;
   }
 
@@ -155,6 +155,22 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+    }
+  });
+};
+
+var fileUpload = function fileUpload(action, data, success) {
+  $.ajax({
+    cache: false,
+    type: "POST",
+    url: action,
+    data: data,
+    processData: false,
+    contentType: false,
+    success: success,
+    error: function error(xhr, status, _error2) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
