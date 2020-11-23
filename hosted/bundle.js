@@ -15,6 +15,11 @@ var handleGame = function handleGame(e) {
   fileUpload($("#gameForm").attr("action"), formData, function () {
     loadGamesFromServer();
   });
+  /*console.log($("#gameForm").serialize());
+  sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
+      loadGamesFromServer();
+  });*/
+
   return false;
 };
 
