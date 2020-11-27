@@ -1,13 +1,16 @@
+//The required tools are downloaded for use 
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
+//The limitations for the Account model
 let AccountModel = {};
 const iterations = 10000;
 const saltLength = 64;
 const keyLength = 64;
 
+//The schematics or structure for an Account
 const AccountSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -36,6 +39,7 @@ AccountSchema.statics.toAPI = (doc) => ({
   _id: doc._id,
 });
 
+//Checks if password is correctly matched with username
 const validatePassword = (doc, password, callback) => {
   const pass = doc.password;
 
@@ -47,6 +51,7 @@ const validatePassword = (doc, password, callback) => {
   });
 };
 
+//Finds account by username
 AccountSchema.statics.findByUsername = (name, callback) => {
   const search = {
     username: name,
@@ -55,12 +60,14 @@ AccountSchema.statics.findByUsername = (name, callback) => {
   return AccountModel.findOne(search, callback);
 };
 
+//Generates a hash number
 AccountSchema.statics.generateHash = (password, callback) => {
   const salt = crypto.randomBytes(saltLength);
 
   crypto.pbkdf2(password, salt, iterations, keyLength, 'RSA-SHA512', (err, hash) => callback(salt, hash.toString('hex')));
 };
 
+//Authenticates account
 AccountSchema.statics.authenticate = (username, password, callback) => {
   AccountModel.findByUsername(username, (err, doc) => {
     if (err) {
@@ -81,7 +88,9 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
   });
 };
 
+//Creates new account using the schematics, and saves it to database
 AccountModel = mongoose.model('Account', AccountSchema);
 
+//Exports the necessary functions
 module.exports.AccountModel = AccountModel;
 module.exports.AccountSchema = AccountSchema;

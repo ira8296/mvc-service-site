@@ -1,28 +1,34 @@
-const models = require('../models');
+const models = require('../models'); //Getting the models
 
-const { Account } = models;
+const { Account } = models; //Instance of the model types
 
+//Returns the login page
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
+//Returns the signup page
 const signupPage = (req, res) => {
   res.render('signup', { csrfToken: req.csrfToken() });
 };
 
+//Returns the arcade page
 const gamePage = (req, res) => {
   res.render('arcade', { csrfToken: req.csrfToken() });
 };
 
+//Returns the home page
 const homePage = (req, res) => {
   res.render('home', { csrfToken: req.csrfToken() });
 };
 
+//Ends the user's session and returns to the home page
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+//Starts up an existing session
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -46,6 +52,7 @@ const login = (request, response) => {
   });
 };
 
+//Starts a new account along with a new session
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -91,6 +98,7 @@ const signup = (request, response) => {
   });
 };
 
+//Finds and retrieves CSRF token
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -102,6 +110,7 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+//Exports all necessary functions
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;

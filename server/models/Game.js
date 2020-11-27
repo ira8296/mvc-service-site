@@ -1,5 +1,5 @@
+//Downloads the database needed
 const mongoose = require('mongoose');
-// const nedb = require('nedb');
 
 mongoose.Promise = global.Promise;
 const _ = require('underscore');
@@ -11,6 +11,7 @@ let GameModel = {};
 const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
+//The schematics or structure for a game
 const GameSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -48,6 +49,7 @@ const GameSchema = new mongoose.Schema({
   },
 });
 
+//Returns the major data associated with a specific game
 GameSchema.statics.toAPI = (doc) => ({
   title: doc.title,
   description: doc.description,
@@ -55,6 +57,7 @@ GameSchema.statics.toAPI = (doc) => ({
   file: doc.file,
 });
 
+//Finds a game by its owner
 GameSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
@@ -63,7 +66,9 @@ GameSchema.statics.findByOwner = (ownerId, callback) => {
   return GameModel.find(search).select('title description image file').lean().exec(callback);
 };
 
+//Creates new game model using the schematics, and saves it to database
 GameModel = mongoose.model('Game', GameSchema);
 
+//Exports the necessary functions
 module.exports.GameModel = GameModel;
 module.exports.GameSchema = GameSchema;

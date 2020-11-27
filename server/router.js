@@ -1,6 +1,8 @@
+//Pulls in the controllers and middleware
 const controllers = require('./controllers');
 const mid = require('./middleware');
 
+//Teh router which allows for directory between pages
 const router = (app) => {
   app.get('/download', mid.requiresSecure, mid.requiresLogin, controllers.Game.download);
   app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
@@ -18,4 +20,5 @@ const router = (app) => {
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.homePage);
 };
 
+//Exports the router
 module.exports = router;
