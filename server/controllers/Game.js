@@ -1,4 +1,3 @@
-
 const models = require('../models');
 const file = require('../models/File.js');
 
@@ -96,7 +95,6 @@ const getGames = (request, response) => {
 };
 
 const getAllGames = (request, response) => {
-  const req = request;
   const res = response;
 
   return Game.GameModel.find({}, (err, docs) => {
@@ -122,7 +120,7 @@ const downloadFile = (req, res) => {
     if (!doc) {
       return res.status(400).json({ error: 'File not found' });
     }
-    
+
     res.writeHead(200, { 'Content-Type': doc.mimetype, 'Content-Length': doc.size });
     return res.end(doc.data);
   });
