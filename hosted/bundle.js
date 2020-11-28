@@ -132,7 +132,7 @@ var loadGamesFromServer = function loadGamesFromServer() {
       games: data.games
     }), document.querySelector("#games"));
   });
-}; //Sets up the arcade page
+}; //Sets up the user page
 
 
 var setup = function setup(csrf) {

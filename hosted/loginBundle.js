@@ -58,7 +58,11 @@ var LoginWindow = function LoginWindow(props) {
     className: "formSubmit",
     type: "submit",
     value: "Sign in"
-  }));
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "devMessage"
+  }, /*#__PURE__*/React.createElement("p", {
+    id: "errorMessage"
+  })));
 }; //Displays the signup window
 
 
@@ -99,7 +103,11 @@ var SignupWindow = function SignupWindow(props) {
     className: "formSubmit",
     type: "submit",
     value: "Sign Up"
-  }));
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "devMessage"
+  }, /*#__PURE__*/React.createElement("p", {
+    id: "errorMessage"
+  })));
 }; //Builds the login window
 
 
@@ -113,7 +121,7 @@ var createLoginWindow = function createLoginWindow(csrf) {
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(SignupWindow, {
     csrf: csrf
-  }), document.querySelector("#content"));
+  }), document.querySelector("#signup"));
 }; //Sets up the event handlers for the login and signup pages
 
 

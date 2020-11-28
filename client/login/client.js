@@ -47,7 +47,9 @@ const LoginWindow = (props) => {
     <input id="pass" type="password" name="pass" placeholder="password"/>
     <input type="hidden" name="_csrf" value={props.csrf}/>
     <input className="formSubmit" type="submit" value="Sign in" />
-        
+    <div id="devMessage">
+      <p id="errorMessage"></p>
+    </div>   
   </form>
   );
 };
@@ -70,6 +72,9 @@ const SignupWindow = (props) => {
             <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
             <input type="hidden" name="_csrf" value={props.csrf}/>
             <input className="formSubmit" type="submit" value="Sign Up" />
+            <div id="devMessage">
+                <p id="errorMessage"></p>
+            </div>
         </form>
     );
 };
@@ -86,7 +91,7 @@ const createLoginWindow = (csrf) => {
 const createSignupWindow = (csrf) => {
     ReactDOM.render(
         <SignupWindow csrf={csrf} />,
-        document.querySelector("#content")
+        document.querySelector("#signup")
     );
 };
 

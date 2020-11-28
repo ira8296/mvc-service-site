@@ -104,7 +104,7 @@ const loadGamesFromServer = () => {
     });
 };
 
-//Sets up the arcade page
+//Sets up the user page
 const setup = function(csrf) {
     ReactDOM.render(
         <GameForm csrf={csrf} />, document.querySelector("#makeGames")
