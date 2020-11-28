@@ -1,27 +1,26 @@
 "use strict";
 
+//Handles the game posting process
 var handleGame = function handleGame(e) {
-  e.preventDefault();
+  e.preventDefault(); //Checks if all the fields are filled in
 
   if ($("#gameTitle").val() == '' || $("#description").val() == '' || $("#screenShot").val() == '') {
     handleError("All fields are required");
     return false;
-  }
+  } //Instances of the game form and form data
+
 
   var gameForm = document.getElementById('gameForm');
   var formData = new FormData(gameForm);
   console.dir(gameForm);
-  console.dir(formData);
+  console.dir(formData); //Loads the game upon file upload
+
   fileUpload($("#gameForm").attr("action"), formData, function () {
     loadGamesFromServer();
   });
-  /*console.log($("#gameForm").serialize());
-  sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
-      loadGamesFromServer();
-  });*/
-
   return false;
-};
+}; //Builds the form needed for posting games
+
 
 var GameForm = function GameForm(props) {
   return /*#__PURE__*/React.createElement("form", {
@@ -77,7 +76,8 @@ var GameForm = function GameForm(props) {
     type: "submit",
     value: "Post Game"
   })));
-};
+}; //Displays the list of games to the screen
+
 
 var GameList = function GameList(props) {
   if (props.games.length === 0) {
@@ -86,7 +86,8 @@ var GameList = function GameList(props) {
     }, /*#__PURE__*/React.createElement("h3", {
       className: "emptyGame"
     }, "No Games yet"));
-  }
+  } //Builds the nodes which make up the list
+
 
   var gameNodes = props.games.map(function (game) {
     var imgString = "/download?fileId=".concat(game.image);
@@ -117,7 +118,8 @@ var GameList = function GameList(props) {
   return /*#__PURE__*/React.createElement("div", {
     className: "gameList"
   }, gameNodes);
-};
+}; //Retrieves all of the games stored within the database
+
 
 var loadGamesFromServer = function loadGamesFromServer() {
   sendAjax('GET', '/getAllGames', null, function (data) {
@@ -126,34 +128,40 @@ var loadGamesFromServer = function loadGamesFromServer() {
       games: data.games
     }), document.querySelector("#gameStack"));
   });
-};
+}; //Sets up the arcade page
+
 
 var setup = function setup(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(GameList, {
     games: []
   }), document.querySelector("#gameStack"));
   loadGamesFromServer();
-};
+}; //Retrieves the CSRF token and sets up the page
+
 
 var getToken = function getToken() {
   sendAjax('GET', '/getToken', null, function (result) {
     setup(result.csrfToken);
   });
-};
+}; //Upon loading, all of the page elements are set up
+
 
 $(document).ready(function () {
   getToken();
 });
 "use strict";
 
+//Prints and displayS any user errors
 var handleError = function handleError(message) {
-  $("#errorMessage").text(message); //$("#domoMessage").animate({width:'toggle'},350);
-};
+  $("#errorMessage").text(message);
+}; //Redirects the window depending on which link is clicked
+
 
 var redirect = function redirect(response) {
   //$("#domoMessage").animate({width:'hide'},350);
   window.location = response.redirect;
-};
+}; //Sends AJAX requests
+
 
 var sendAjax = function sendAjax(type, action, data, success) {
   $.ajax({
@@ -168,7 +176,8 @@ var sendAjax = function sendAjax(type, action, data, success) {
       handleError(messageObj.error);
     }
   });
-};
+}; //Dictates the file uploading process
+
 
 var fileUpload = function fileUpload(action, data, success) {
   $.ajax({

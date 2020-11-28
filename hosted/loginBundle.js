@@ -1,5 +1,6 @@
 "use strict";
 
+//Checks and dictates the login process
 var handleLogin = function handleLogin(e) {
   e.preventDefault(); //$("#domoMessage").animate({width: 'hide'},350);
 
@@ -11,7 +12,8 @@ var handleLogin = function handleLogin(e) {
   console.log($("input[name=_csrf]").val());
   sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
   return false;
-};
+}; //Checks and dictates the signup process
+
 
 var handleSignup = function handleSignup(e) {
   e.preventDefault(); //$("#domoMessage").animate({width:'hide'},350);
@@ -23,7 +25,8 @@ var handleSignup = function handleSignup(e) {
 
   sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
   return false;
-};
+}; //Displays the login window
+
 
 var LoginWindow = function LoginWindow(props) {
   return /*#__PURE__*/React.createElement("form", {
@@ -56,7 +59,8 @@ var LoginWindow = function LoginWindow(props) {
     type: "submit",
     value: "Sign in"
   }));
-};
+}; //Displays the signup window
+
 
 var SignupWindow = function SignupWindow(props) {
   return /*#__PURE__*/React.createElement("form", {
@@ -96,19 +100,22 @@ var SignupWindow = function SignupWindow(props) {
     type: "submit",
     value: "Sign Up"
   }));
-};
+}; //Builds the login window
+
 
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(LoginWindow, {
     csrf: csrf
   }), document.querySelector("#content"));
-};
+}; //Builds the signup window
+
 
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(SignupWindow, {
     csrf: csrf
   }), document.querySelector("#content"));
-};
+}; //Sets up the event handlers for the login and signup pages
+
 
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
@@ -124,27 +131,32 @@ var setup = function setup(csrf) {
     return false;
   });
   createLoginWindow(csrf); //default view
-};
+}; //Retrieves CSRF TOKEN
+
 
 var getToken = function getToken() {
   sendAjax('GET', '/getToken', null, function (result) {
     setup(result.csrfToken);
   });
-};
+}; //Upon loading, all of the page elements are set up
+
 
 $(document).ready(function () {
   getToken();
 });
 "use strict";
 
+//Prints and displayS any user errors
 var handleError = function handleError(message) {
-  $("#errorMessage").text(message); //$("#domoMessage").animate({width:'toggle'},350);
-};
+  $("#errorMessage").text(message);
+}; //Redirects the window depending on which link is clicked
+
 
 var redirect = function redirect(response) {
   //$("#domoMessage").animate({width:'hide'},350);
   window.location = response.redirect;
-};
+}; //Sends AJAX requests
+
 
 var sendAjax = function sendAjax(type, action, data, success) {
   $.ajax({
@@ -159,7 +171,8 @@ var sendAjax = function sendAjax(type, action, data, success) {
       handleError(messageObj.error);
     }
   });
-};
+}; //Dictates the file uploading process
+
 
 var fileUpload = function fileUpload(action, data, success) {
   $.ajax({

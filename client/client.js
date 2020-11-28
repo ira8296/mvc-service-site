@@ -1,7 +1,9 @@
+//Prints and displayS any user errors
 const handleError = (message) => {
   $("#errorMessage").text(message);
 }
 
+//Sends AJAX requests
 const sendAjax = (action, data) => {
   $.ajax({
     cache: false,
@@ -21,6 +23,7 @@ const sendAjax = (action, data) => {
   });        
 }
 
+//Upon loading, the mechanics for the login, signup, and game forms are set up
 $(document).ready(() => {
   $("#signupForm").on("submit", (e) => {
     e.preventDefault();

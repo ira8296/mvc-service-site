@@ -1,29 +1,29 @@
+//Handles the game posting process
 const handleGame = (e) => {
     e.preventDefault();
     
+    //Checks if all the fields are filled in
     if($("#gameTitle").val() == '' || $("#description").val() == '' || $("#screenShot").val() == '') {
         handleError("All fields are required");
         return false;
     }
     
+    //Instances of the game form and form data
     let gameForm = document.getElementById('gameForm');
     let formData = new FormData(gameForm);
     console.dir(gameForm);
     
     console.dir(formData);
     
+    //Loads the game upon file upload
     fileUpload($("#gameForm").attr("action"), formData, function() {
         loadGamesFromServer();
     });
     
-    /*console.log($("#gameForm").serialize());
-    sendAjax('POST', $("#gameForm").attr("action"), $("#gameForm").serialize(), function() {
-        loadGamesFromServer();
-    });*/
-    
     return false;
 };
 
+//Builds the form needed for posting games
 const GameForm = (props) => {
     return (
         <form id="gameForm"
@@ -58,6 +58,7 @@ const GameForm = (props) => {
     );
 };
 
+//Displays the list of games to the screen
 const GameList = function(props) {
     if(props.games.length === 0) {
         return (
@@ -67,6 +68,7 @@ const GameList = function(props) {
         );
     }
     
+    //Builds the nodes which make up the list
     const gameNodes = props.games.map(function(game) {
         let imgString = `/download?fileId=${game.image}`;
         return (
@@ -89,6 +91,7 @@ const GameList = function(props) {
     );
 };
 
+//Retrieves all of the games stored within the database
 const loadGamesFromServer = () => {
     sendAjax('GET', '/getAllGames', null, (data) => {
         console.dir(data);
@@ -98,6 +101,7 @@ const loadGamesFromServer = () => {
     });
 };
 
+//Sets up the arcade page
 const setup = function(csrf) {
     ReactDOM.render(
         <GameList games={[]} />, document.querySelector("#gameStack")
@@ -106,12 +110,14 @@ const setup = function(csrf) {
     loadGamesFromServer();
 };
 
+//Retrieves the CSRF token and sets up the page
 const getToken = () => {
     sendAjax('GET', '/getToken', null, (result) => {
         setup(result.csrfToken);
     });
 };
 
+//Upon loading, all of the page elements are set up
 $(document).ready(function() {
     getToken();
 });

@@ -1,13 +1,15 @@
+//Prints and displayS any user errors
 const handleError = (message) => {
     $("#errorMessage").text(message);
-    //$("#domoMessage").animate({width:'toggle'},350);
 };
 
+//Redirects the window depending on which link is clicked
 const redirect = (response) => {
     //$("#domoMessage").animate({width:'hide'},350);
     window.location = response.redirect;
 };
 
+//Sends AJAX requests
 const sendAjax = (type, action, data, success) => {
     $.ajax({
         cache: false,
@@ -23,6 +25,7 @@ const sendAjax = (type, action, data, success) => {
     });
 };
 
+//Dictates the file uploading process
 const fileUpload = (action, data, success) => {
     $.ajax({
         cache: false,
