@@ -2,13 +2,12 @@
 const controllers = require('./controllers');
 const mid = require('./middleware');
 
-//Teh router which allows for directory between pages
+//The router which allows for directory between pages
 const router = (app) => {
   app.get('/download', mid.requiresSecure, mid.requiresLogin, controllers.Game.download);
   app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
   app.get('/getGames', mid.requiresLogin, controllers.Game.getGames);
   app.get('/getAllGames', mid.requiresLogin, controllers.Game.getAll);
-  app.get('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signupPage);
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);

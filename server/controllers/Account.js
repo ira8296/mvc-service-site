@@ -7,11 +7,6 @@ const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
-//Returns the signup page
-const signupPage = (req, res) => {
-  res.render('signup', { csrfToken: req.csrfToken() });
-};
-
 //Returns the arcade page
 const gamePage = (req, res) => {
   res.render('arcade', { csrfToken: req.csrfToken() });
@@ -115,7 +110,6 @@ module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
-module.exports.signupPage = signupPage;
 module.exports.getToken = getToken;
 module.exports.games = gamePage;
 module.exports.homePage = homePage;
