@@ -2,8 +2,6 @@
 const handleLogin = (e) => {
     e.preventDefault();
     
-    //$("#domoMessage").animate({width: 'hide'},350);
-    
     if($("#user").val() == '' || $("#pass").val() == '') {
         handleError("Username or password is empty");
         return false;
@@ -97,6 +95,8 @@ const createSignupWindow = (csrf) => {
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");
+    const register = document.querySelector("#registration");
+    console.log(register.value);
     
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -110,7 +110,13 @@ const setup = (csrf) => {
         return false;
     });
     
-    createLoginWindow(csrf); //default view
+    //Decides the default view
+    if(register.value == 'true/'){
+        createSignupWindow(csrf);
+    }
+    else if(register.value == 'false/'){
+        createLoginWindow(csrf);
+    }
 };
 
 //Retrieves CSRF TOKEN

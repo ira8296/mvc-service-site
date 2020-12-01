@@ -4,8 +4,13 @@ const { Account } = models; //Instance of the model types
 
 //Returns the login page
 const loginPage = (req, res) => {
-  res.render('login', { csrfToken: req.csrfToken() });
+  res.render('login', { csrfToken: req.csrfToken(), signup: "false"});
 };
+
+//Returns the signup page
+const signupPage = (req, res) => {
+    res.render('login', { csrfToken: req.csrfToken(), signup: "true"});
+}
 
 //Returns the arcade page
 const gamePage = (req, res) => {
@@ -64,6 +69,14 @@ const signup = (request, response) => {
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
+  
+  Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
+      if(doc){
+        if(doc.username === req.body.username){
+          return res.status(400).json({ error: 'Account already exists' });
+        }   
+      }
+  });
 
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
@@ -109,6 +122,7 @@ const getToken = (request, response) => {
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
+module.exports.signupPage = signupPage;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.games = gamePage;

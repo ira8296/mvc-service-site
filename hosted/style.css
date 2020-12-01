@@ -177,10 +177,11 @@ nav:nth-child(1) {
 #devMessage {
     height: 5%;
     display: inline;
+    margin-left: 3%;
 }
 
 #errorMessage {
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: bold;
     color: red;
     font-style: italic;
