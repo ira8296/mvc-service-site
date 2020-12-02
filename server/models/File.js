@@ -8,7 +8,7 @@ let FileModel = {};
 const FileSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
+    unique: false,
   },
   data: {
     type: Buffer,
