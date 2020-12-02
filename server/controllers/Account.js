@@ -1,34 +1,34 @@
-const models = require('../models'); //Getting the models
+const models = require('../models'); // Getting the models
 
-const { Account } = models; //Instance of the model types
+const { Account } = models; // Instance of the model types
 
-//Returns the login page
+// Returns the login page
 const loginPage = (req, res) => {
-  res.render('login', { csrfToken: req.csrfToken(), signup: "false"});
+  res.render('login', { csrfToken: req.csrfToken(), signup: 'false' });
 };
 
-//Returns the signup page
+// Returns the signup page
 const signupPage = (req, res) => {
-    res.render('login', { csrfToken: req.csrfToken(), signup: "true"});
-}
+  res.render('login', { csrfToken: req.csrfToken(), signup: 'true' });
+};
 
-//Returns the arcade page
+// Returns the arcade page
 const gamePage = (req, res) => {
   res.render('arcade', { csrfToken: req.csrfToken() });
 };
 
-//Returns the home page
+// Returns the home page
 const homePage = (req, res) => {
   res.render('home', { csrfToken: req.csrfToken() });
 };
 
-//Ends the user's session and returns to the home page
+// Ends the user's session and returns to the home page
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
-//Starts up an existing session
+// Starts up an existing session
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -52,7 +52,7 @@ const login = (request, response) => {
   });
 };
 
-//Starts a new account along with a new session
+// Starts a new account along with a new session
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -61,7 +61,8 @@ const signup = (request, response) => {
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
-
+  
+  //Checks for any potential errors
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -69,15 +70,16 @@ const signup = (request, response) => {
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
-  
+
   Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
-      if(doc){
-        if(doc.username === req.body.username){
-          return res.status(400).json({ error: 'Account already exists' });
-        }   
+    if (doc) {
+      if (doc.username === req.body.username) {
+        return res.status(400).json({ error: 'Account already exists' });
       }
+    }
   });
 
+  //Finalizes new account and saves it to the database
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
       username: req.body.username,
@@ -106,7 +108,7 @@ const signup = (request, response) => {
   });
 };
 
-//Finds and retrieves CSRF token
+// Finds and retrieves CSRF token
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -118,7 +120,7 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
-//Exports all necessary functions
+// Exports all necessary functions
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;

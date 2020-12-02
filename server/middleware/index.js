@@ -1,4 +1,4 @@
-//Feature is only accessible by a logged in user
+// Feature is only accessible by a logged in user
 const requiresLogin = (req, res, next) => {
   if (!req.session.account) {
     return res.redirect('/');
@@ -6,7 +6,7 @@ const requiresLogin = (req, res, next) => {
   return next();
 };
 
-//Feature is only accessible if no one is logged in
+// Feature is only accessible if no one is logged in
 const requiresLogout = (req, res, next) => {
   if (req.session.account) {
     return res.redirect('/maker');
@@ -14,7 +14,7 @@ const requiresLogout = (req, res, next) => {
   return next();
 };
 
-//Makes sure that feature is safe
+// Makes sure that feature is safe
 const requiresSecure = (req, res, next) => {
   if (req.headers['x-forwarded-proto'] !== 'https') {
     return res.redirect(`https://${req.hostname}${req.url}`);
@@ -22,12 +22,12 @@ const requiresSecure = (req, res, next) => {
   return next();
 };
 
-//Allows user to go past the necessary login criteria
+// Allows user to go past the necessary login criteria
 const bypassSecure = (req, res, next) => {
   next();
 };
 
-//Exports the necessary functions
+// Exports the necessary functions
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;
 
