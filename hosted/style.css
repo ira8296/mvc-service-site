@@ -69,6 +69,18 @@ nav:nth-child(1) {
     color: #66bdff;
 }
 
+.ad{
+    float: right;
+    height: 90%;
+    width: 25%;
+    margin-left: 20%;
+}
+
+.ad img{
+    height: 90%;
+    width: 25%;
+}
+
 .gameForm {
     border: 2px solid white;
     height: 48%;

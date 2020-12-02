@@ -61,8 +61,8 @@ const signup = (request, response) => {
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
-  
-  //Checks for any potential errors
+
+  // Checks for any potential errors
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -71,39 +71,43 @@ const signup = (request, response) => {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
 
-  Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
+  return Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
+    if (err) {
+      return res.status(400).json({ error: 'Something went wrong' });
+    }
+
     if (doc) {
       if (doc.username === req.body.username) {
         return res.status(400).json({ error: 'Account already exists' });
       }
     }
-  });
 
-  //Finalizes new account and saves it to the database
-  return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
-    const accountData = {
-      username: req.body.username,
-      salt,
-      password: hash,
-    };
+    // Finalizes new account and saves it to the database
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+      const accountData = {
+        username: req.body.username,
+        salt,
+        password: hash,
+      };
 
-    const newAccount = new Account.AccountModel(accountData);
+      const newAccount = new Account.AccountModel(accountData);
 
-    const savePromise = newAccount.save();
+      const savePromise = newAccount.save();
 
-    savePromise.then(() => {
-      req.session.account = Account.AccountModel.toAPI(newAccount);
-      return res.json({ redirect: '/maker' });
-    });
+      savePromise.then(() => {
+        req.session.account = Account.AccountModel.toAPI(newAccount);
+        return res.json({ redirect: '/maker' });
+      });
 
-    savePromise.catch((err) => {
-      console.log(err);
+      savePromise.catch((err2) => {
+        console.log(err2);
 
-      if (err.code === 11000) {
-        return res.status(400).json({ redirect: '/maker' });
-      }
+        if (err2.code === 11000) {
+          return res.status(400).json({ redirect: '/maker' });
+        }
 
-      return res.status(400).json({ error: 'An error occurred' });
+        return res.status(400).json({ error: 'An error occurred' });
+      });
     });
   });
 };
