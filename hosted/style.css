@@ -73,12 +73,15 @@ nav:nth-child(1) {
     float: right;
     height: 90%;
     width: 25%;
-    margin-left: 20%;
+    position: absolute;
+    top: 8%;
+    right: -15%;
 }
 
 .ad img{
     height: 90%;
     width: 25%;
+    position: absolute;
 }
 
 .gameForm {
